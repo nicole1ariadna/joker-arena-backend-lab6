@@ -95,6 +95,10 @@ def cross_check(rows: list[dict], log: list[tuple[float, int]]) -> None:
             skipped.append(r["vus"])
             continue
         lo, hi = r["_end"] - secs - 6, r["_end"] + 2
+        # La ventana no debe alcanzar la ejecución anterior (pasa si se usó una pausa corta entre niveles).
+        earlier = [x["_end"] for x in rows if x["_end"] is not None and x["_end"] < r["_end"]]
+        if earlier:
+            lo = max(lo, max(earlier) + 0.5)
         if not printed_header:
             print(f"   {'VUs':>5} {'k6 ok':>7} {'nginx 200':>9} {'k6 503':>7} {'nginx 503':>9}")
             printed_header = True
