@@ -38,9 +38,8 @@ def load(folder: pathlib.Path) -> list[dict]:
     rows = []
     for p in sorted(folder.glob("vus_*.json")):
         r = json.loads(p.read_text(encoding="utf-8"))
-        # Hora de fin de la ejecución: la que guardó k6; si el JSON es anterior a ese campo, la fecha del archivo.
-        r["_end"] = (datetime.fromisoformat(r["ended_at"].replace("Z", "+00:00")).timestamp()
-                     if r.get("ended_at") else p.stat().st_mtime)
+        # Hora de fin de la ejecución, guardada por k6. No se usa la fecha del archivo: cambia al clonar o copiar.
+        r["_end"] = datetime.fromisoformat(r["ended_at"].replace("Z", "+00:00")).timestamp() if r.get("ended_at") else None
         rows.append(r)
     return sorted(rows, key=lambda r: r["vus"])
 
@@ -92,10 +91,10 @@ def cross_check(rows: list[dict], log: list[tuple[float, int]]) -> None:
     printed_header, skipped = False, []
     for r in rows:
         secs = r["requests"] / r["throughput_rps"]
-        lo, hi = r["_end"] - secs - 6, r["_end"] + 2
-        if r["_end"] < log_start:  # terminó antes de que existiera el gateway actual: no hay registro de esa ejecución
+        if r["_end"] is None or r["_end"] < log_start:  # terminó antes de que existiera el gateway actual: no hay registro de esa ejecución
             skipped.append(r["vus"])
             continue
+        lo, hi = r["_end"] - secs - 6, r["_end"] + 2
         if not printed_header:
             print(f"   {'VUs':>5} {'k6 ok':>7} {'nginx 200':>9} {'k6 503':>7} {'nginx 503':>9}")
             printed_header = True

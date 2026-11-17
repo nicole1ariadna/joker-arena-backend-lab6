@@ -1,6 +1,7 @@
 {
   "vus": 1500,
   "ramp_up": "1s",
+  "ended_at": "2026-11-17T01:53:19.438Z",
   "requests": 35859,
   "failed_requests": 7628,
   "failed_pct": 21.272205025237735,
