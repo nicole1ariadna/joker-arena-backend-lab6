@@ -89,10 +89,10 @@ Mejora sugerida: definir un bloque `upstream` con `keepalive` en `gateway/nginx.
 
 ## Verificación de los datos
 
-`python perf/lab6/verify_results.py` comprueba, sin intervención manual:
+Los resultados publicados se comprobaron de cuatro formas. `python perf/lab6/verify_results.py` repite las que no dependen del servidor.
 
 1. **Aritmética:** cada nivel hizo entre 99 % y 105 % de las peticiones esperadas, y las fallas clasificadas suman el total.
-2. **Cruce con el servidor:** las respuestas 200 y 503 que registró nginx durante cada ejecución coinciden exactamente con las que contó k6, en los 13 niveles. Esto también descarta carga ajena durante las pruebas.
+2. **Cruce con el servidor:** las respuestas 200 y 503 que registró nginx durante cada ejecución coincidieron exactamente con las que contó k6, en los 13 niveles. Esto también descarta carga ajena durante las pruebas. Este cruce solo se puede hacer mientras existe el contenedor que atendió la prueba, así que se repite sobre cada ejecución nueva (ver "Reproducir").
 3. **Reproducibilidad:** segunda ejecución de 300, 600, 1 000 y 1 500 usuarios (`results/_repeat`).
 
 | Usuarios | Fallos 1ª | Fallos 2ª | Throughput exitoso 1ª | Throughput exitoso 2ª | avg 1ª (ms) | avg 2ª (ms) |
@@ -102,7 +102,9 @@ Mejora sugerida: definir un bloque `upstream` con `keepalive` en `gateway/nginx.
 | 1 000 | 4.10 % | 5.73 % | 875.4 | 881.2 | 57.0 | 35.0 |
 | 1 500 | 21.27 % | 22.26 % | 868.8 | 871.1 | 306.5 | 287.7 |
 
-4. **Entregables:** `results.csv`, la tabla de este documento y los puntos de la gráfica salen de los JSON crudos.
+4. **Entregables:** `results.csv`, la tabla de este documento, la rodilla y los puntos de la gráfica salen de los JSON crudos.
+
+Además, el procedimiento completo se repitió desde un clon limpio del repositorio y dio la misma rodilla (entre 800 y 1 000 usuarios), 0 fallas hasta 800 usuarios y el mismo tope de 28 231 respuestas exitosas.
 
 ## Limitaciones
 
@@ -115,10 +117,60 @@ Mejora sugerida: definir un bloque `upstream` con `keepalive` en `gateway/nginx.
 
 ## Reproducir
 
+Requisitos: Docker (con Docker Compose v2), [k6](https://grafana.com/docs/k6/latest/set-up/install-k6/), Python 3 y bash
+(en Windows, Git Bash). Los comandos se ejecutan desde la raíz del repositorio. Si en su equipo Python se llama `python3`, use ese nombre.
+
+1. Crear el archivo `.env` (no viene en el repositorio). Genera contraseñas aleatorias para el despliegue local:
+
+```bash
+python perf/lab6/make_env.py
+```
+
+2. Desplegar los componentes de la funcionalidad. La primera vez tarda varios minutos porque descarga y construye las imágenes:
+
 ```bash
 docker compose -f docker-compose.p2.yml up -d --build --wait jokerarena-leaderboard-stats-ms jokerarena-gateway jokerarena-web-ssr
-python perf/lab6/seed_leaderboard.py
-bash perf/lab6/run_sweep.sh
-python perf/lab6/build_report.py
-python perf/lab6/verify_results.py
 ```
+
+3. Cargar los datos de prueba (200 jugadores y 600 partidas):
+
+```bash
+python perf/lab6/seed_leaderboard.py
+```
+
+4. Comprobar que responde: `http://localhost:8080/api/leaderboard/top?limit=10` (API Gateway) y `http://localhost:3000/leaderboard` (web).
+
+5. Ejecutar el barrido de carga. Son 13 niveles y tarda unos 25 minutos; conviene no usar el equipo mientras corre y, si es portátil, tenerlo conectado a la corriente:
+
+```bash
+bash perf/lab6/run_sweep.sh
+```
+
+6. Generar la tabla y la curva de esa ejecución, y verificarla:
+
+```bash
+python perf/lab6/build_report.py perf/lab6/results/_local
+```
+
+```bash
+python perf/lab6/verify_results.py perf/lab6/results/_local
+```
+
+Cada ejecución propia queda en `perf/lab6/results/_local` (tabla en `results.csv`, curva en `performance_curve.svg`).
+Los resultados publicados en `perf/lab6/results` no se modifican.
+
+Para una prueba rápida de un solo nivel: `k6 run -e VUS=50 -e RAMP_UP=1s perf/lab6/performance_test.js`.
+Para apagar todo: `docker compose -f docker-compose.p2.yml down` (agregue `-v` para borrar también los datos).
+
+### Qué esperar en otro equipo
+
+Debe coincidir con lo publicado:
+
+- 0 % de fallas y el mismo throughput en los niveles bajos (hasta 600 usuarios). El verificador lo exige.
+- Con el gateway saturado, las fallas son respuestas `503` y las respuestas exitosas no pasan de ~28 232 por ejecución.
+
+Puede variar sin que sea un error:
+
+- Los tiempos de respuesta en milisegundos, sobre todo de 600 usuarios en adelante.
+- El punto exacto de la rodilla. Los errores aparecen cuando una prueba de 30 s supera ~28 000 peticiones; un equipo más lento puede no alcanzarlas con 1 000 usuarios y mostrar la rodilla más arriba.
+- Los niveles de 2 000 y 3 000 usuarios, donde además Docker Desktop puede rechazar conexiones al arrancar (fallas "sin respuesta").

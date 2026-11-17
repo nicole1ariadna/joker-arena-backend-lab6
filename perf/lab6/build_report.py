@@ -4,15 +4,17 @@ Lee perf/lab6/results/vus_*.json (uno por nivel de carga) y genera:
   - perf/lab6/results/results.csv           tabla con todos los niveles
   - perf/lab6/results/performance_curve.svg  curva: usuarios vs. tiempo de respuesta y % de error
 
-Uso:  python perf/lab6/build_report.py
+Uso:  python perf/lab6/build_report.py                             resultados publicados
+      python perf/lab6/build_report.py perf/lab6/results/_local    una ejecución propia
 """
 import csv
 import json
 import math
 import pathlib
+import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
-RESULTS = HERE / "results"
+RESULTS = pathlib.Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE / "results"
 FIELDS = [
     "vus", "ramp_up", "requests", "failed_requests", "failed_pct", "fail_connection", "fail_503", "fail_other_status",
     "first_fail_s", "last_fail_s", "throughput_rps", "ok_throughput_rps",
@@ -117,7 +119,7 @@ def svg(rows: list[dict], last_ok: dict | None, first_bad: dict | None) -> str:
 def main() -> None:
     rows = load()
     if not rows:
-        raise SystemExit("No hay resultados en perf/lab6/results. Ejecute primero run_sweep.sh.")
+        raise SystemExit(f"No hay resultados en {RESULTS}. Ejecute primero run_sweep.sh.")
     with (RESULTS / "results.csv").open("w", newline="", encoding="utf-8") as f:
         wr = csv.DictWriter(f, fieldnames=FIELDS)
         wr.writeheader()

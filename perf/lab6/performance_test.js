@@ -76,6 +76,7 @@ export function handleSummary(data) {
   const row = {
     vus: VUS,
     ramp_up: RAMP_UP,
+    ended_at: new Date().toISOString(), // para cruzar esta ejecución con el log del gateway
     requests: reqs,
     failed_requests: failed,
     failed_pct: reqs ? (failed / reqs) * 100 : 0,
