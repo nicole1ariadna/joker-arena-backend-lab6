@@ -93,7 +93,7 @@ def cross_check(rows: list[dict], log: list[tuple[float, int]]) -> None:
     for r in rows:
         secs = r["requests"] / r["throughput_rps"]
         lo, hi = r["_end"] - secs - 6, r["_end"] + 2
-        if lo < log_start:  # el contenedor del gateway se creó después: no hay registro de esa ejecución
+        if r["_end"] < log_start:  # terminó antes de que existiera el gateway actual: no hay registro de esa ejecución
             skipped.append(r["vus"])
             continue
         if not printed_header:
