@@ -8,12 +8,13 @@ import re
 import secrets
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+PLACEHOLDER = re.compile(r"<[^<>\r\n]+>")
+
 env = ROOT / ".env"
 if env.exists():
     print(".env ya existe: no se modifica.")
 else:
     text = (ROOT / ".env.example").read_text(encoding="utf-8")
-    env.write_text(re.sub(r"<[^>
-]+>", lambda m: secrets.token_hex(12), text), encoding="utf-8", newline="
-")
-    print(".env creado con contraseñas aleatorias (solo para este despliegue local).")
+    filled = PLACEHOLDER.sub(lambda m: secrets.token_hex(12), text)
+    env.write_text(filled, encoding="utf-8", newline="\n")
+    print(f".env creado con {len(PLACEHOLDER.findall(text))} contraseñas aleatorias (solo para este despliegue local).")
