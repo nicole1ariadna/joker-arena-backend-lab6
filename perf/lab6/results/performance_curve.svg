@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Segoe UI, Arial, sans-serif">
+<rect width="960" height="560" fill="#ffffff"/>
+<text x="80" y="30" font-size="19" font-weight="700" fill="#111827">Curva de desempeño · GET /api/leaderboard/top (JokerArena)</text>
+<text x="80" y="50" font-size="12.5" fill="#6b7280">k6 → API Gateway → leaderboard-stats-ms → Redis / Neo4j · 30 s por nivel de carga</text>
+<line x1="80" y1="72" x2="110" y2="72" stroke="#2563eb" stroke-width="2.5"/>
+<text x="116" y="76" font-size="12" fill="#111827">http_req_duration (avg), eje izquierdo</text>
+<line x1="370" y1="72" x2="400" y2="72" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="406" y="76" font-size="12" fill="#111827">http_req_failed, eje derecho</text>
+<line x1="80" y1="96.0" x2="880" y2="96.0" stroke="#e5e7eb"/>
+<text x="70" y="100.0" font-size="12" text-anchor="end" fill="#2563eb">2,000</text>
+<text x="890" y="100.0" font-size="12" fill="#dc2626">50 %</text>
+<line x1="80" y1="174.8" x2="880" y2="174.8" stroke="#e5e7eb"/>
+<text x="70" y="178.8" font-size="12" text-anchor="end" fill="#2563eb">1,600</text>
+<text x="890" y="178.8" font-size="12" fill="#dc2626">40 %</text>
+<line x1="80" y1="253.6" x2="880" y2="253.6" stroke="#e5e7eb"/>
+<text x="70" y="257.6" font-size="12" text-anchor="end" fill="#2563eb">1,200</text>
+<text x="890" y="257.6" font-size="12" fill="#dc2626">30 %</text>
+<line x1="80" y1="332.4" x2="880" y2="332.4" stroke="#e5e7eb"/>
+<text x="70" y="336.4" font-size="12" text-anchor="end" fill="#2563eb">800</text>
+<text x="890" y="336.4" font-size="12" fill="#dc2626">20 %</text>
+<line x1="80" y1="411.2" x2="880" y2="411.2" stroke="#e5e7eb"/>
+<text x="70" y="415.2" font-size="12" text-anchor="end" fill="#2563eb">400</text>
+<text x="890" y="415.2" font-size="12" fill="#dc2626">10 %</text>
+<line x1="80" y1="490.0" x2="880" y2="490.0" stroke="#e5e7eb"/>
+<text x="70" y="494.0" font-size="12" text-anchor="end" fill="#2563eb">0</text>
+<text x="890" y="494.0" font-size="12" fill="#dc2626">0 %</text>
+<line x1="80.0" y1="490" x2="80.0" y2="496" stroke="#6b7280"/>
+<text x="80.0" y="512" font-size="12" text-anchor="middle" fill="#111827">1</text>
+<line x1="470.9" y1="490" x2="470.9" y2="496" stroke="#6b7280"/>
+<text x="470.9" y="512" font-size="12" text-anchor="middle" fill="#111827">50</text>
+<line x1="540.2" y1="490" x2="540.2" y2="496" stroke="#6b7280"/>
+<text x="540.2" y="512" font-size="12" text-anchor="middle" fill="#111827">100</text>
+<line x1="609.4" y1="490" x2="609.4" y2="496" stroke="#6b7280"/>
+<text x="609.4" y="512" font-size="12" text-anchor="middle" fill="#111827">200</text>
+<line x1="649.9" y1="490" x2="649.9" y2="496" stroke="#6b7280"/>
+<text x="649.9" y="512" font-size="12" text-anchor="middle" fill="#111827">300</text>
+<line x1="678.7" y1="490" x2="678.7" y2="496" stroke="#6b7280"/>
+<line x1="701.0" y1="490" x2="701.0" y2="496" stroke="#6b7280"/>
+<text x="701.0" y="512" font-size="12" text-anchor="middle" fill="#111827">500</text>
+<line x1="719.2" y1="490" x2="719.2" y2="496" stroke="#6b7280"/>
+<line x1="747.9" y1="490" x2="747.9" y2="496" stroke="#6b7280"/>
+<text x="747.9" y="512" font-size="12" text-anchor="middle" fill="#111827">800</text>
+<line x1="770.2" y1="490" x2="770.2" y2="496" stroke="#6b7280"/>
+<line x1="810.7" y1="490" x2="810.7" y2="496" stroke="#6b7280"/>
+<text x="810.7" y="512" font-size="12" text-anchor="middle" fill="#111827">1500</text>
+<line x1="839.5" y1="490" x2="839.5" y2="496" stroke="#6b7280"/>
+<line x1="880.0" y1="490" x2="880.0" y2="496" stroke="#6b7280"/>
+<text x="880.0" y="512" font-size="12" text-anchor="middle" fill="#111827">3000</text>
+<line x1="80" y1="490" x2="880" y2="490" stroke="#6b7280"/>
+<text x="480.0" y="542" font-size="13" text-anchor="middle" fill="#111827">Usuarios concurrentes (VUs) · escala logarítmica</text>
+<text transform="translate(22 293.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#2563eb">Tiempo de respuesta promedio (ms)</text>
+<text transform="translate(944 293.0) rotate(90)" font-size="13" text-anchor="middle" fill="#dc2626">Peticiones fallidas (%)</text>
+<rect x="747.9" y="96" width="22.3" height="394" fill="#f59e0b" opacity="0.2"/>
+<text x="739.9" y="116" font-size="13" font-weight="700" text-anchor="end" fill="#b45309">Rodilla</text>
+<text x="739.9" y="133" font-size="12" text-anchor="end" fill="#b45309">entre 800 y 1000 usuarios</text>
+<polyline points="80.0,490.0 470.9,490.0 540.2,490.0 609.4,490.0 649.9,490.0 678.7,490.0 701.0,490.0 719.2,490.0 747.9,490.0 770.2,457.7 810.7,322.4 839.5,312.1 880.0,274.2" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="80.0" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="470.9" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="540.2" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="609.4" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="649.9" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="678.7" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="701.0" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="719.2" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="747.9" cy="490.0" r="3.5" fill="#dc2626"/>
+<circle cx="770.2" cy="457.7" r="3.5" fill="#dc2626"/>
+<circle cx="810.7" cy="322.4" r="3.5" fill="#dc2626"/>
+<circle cx="839.5" cy="312.1" r="3.5" fill="#dc2626"/>
+<circle cx="880.0" cy="274.2" r="3.5" fill="#dc2626"/>
+<polyline points="80.0,489.1 470.9,489.6 540.2,489.5 609.4,489.6 649.9,489.6 678.7,489.5 701.0,489.3 719.2,488.6 747.9,487.7 770.2,478.8 810.7,429.6 839.5,345.9 880.0,197.8" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="80.0" cy="489.1" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="470.9" cy="489.6" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="540.2" cy="489.5" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="609.4" cy="489.6" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="649.9" cy="489.6" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="678.7" cy="489.5" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="701.0" cy="489.3" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="719.2" cy="488.6" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="747.9" cy="487.7" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="770.2" cy="478.8" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="810.7" cy="429.6" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<text x="801.7" y="422.6" font-size="11.5" font-weight="600" text-anchor="end" fill="#2563eb">306 ms</text>
+<circle cx="839.5" cy="345.9" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<text x="830.5" y="338.9" font-size="11.5" font-weight="600" text-anchor="end" fill="#2563eb">731 ms</text>
+<circle cx="880.0" cy="197.8" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+<text x="871.0" y="190.8" font-size="11.5" font-weight="600" text-anchor="end" fill="#2563eb">1,483 ms</text>
+</svg>

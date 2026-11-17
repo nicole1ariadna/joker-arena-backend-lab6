@@ -1,0 +1,22 @@
+{
+  "vus": 300,
+  "ramp_up": "1s",
+  "requests": 9279,
+  "failed_requests": 0,
+  "failed_pct": 0,
+  "fail_connection": 0,
+  "fail_503": 0,
+  "fail_other_status": 0,
+  "first_fail_s": null,
+  "median_fail_s": null,
+  "last_fail_s": null,
+  "throughput_rps": 289.94662797836844,
+  "ok_throughput_rps": 289.94662797836844,
+  "avg_ms": 2.142985418687361,
+  "med_ms": 2.0487,
+  "p95_ms": 3.6971300000000005,
+  "max_ms": 55.7358,
+  "ok_avg_ms": 2.142985418687361,
+  "ok_med_ms": 2.0487,
+  "ok_p95_ms": 3.6971300000000005
+}
